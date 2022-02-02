@@ -24,8 +24,8 @@ public class MovieServiceImplement implements MovieService {
 
     ArrayList<MovieEntity> movieList;
 
-    public MovieServiceImplement(Scanner read, ArrayList<MovieEntity> movieList) {
-        this.read = new Scanner(System.in);
+    public MovieServiceImplement() {
+        this.read = new Scanner(System.in).useDelimiter("\n");
         this.movieList = new ArrayList();
     }
 
@@ -35,11 +35,11 @@ public class MovieServiceImplement implements MovieService {
         MovieEntity newMovie = new MovieEntity();
 
         System.out.println("Insert the movie name!");
-        newMovie.setMovie(read.next());
+        newMovie.setMovieName(read.next());
         System.out.println("Insert the movie director!");
         newMovie.setDirector(read.next());
         System.out.println("Insert the movie duration!");
-        newMovie.setMovie(read.next());
+        newMovie.setDuration(read.nextInt());
 
         return newMovie;
     }
@@ -48,7 +48,7 @@ public class MovieServiceImplement implements MovieService {
     public String addMovieToTheList(MovieEntity newMovie) {
 
         movieList.add(newMovie);
-        return newMovie.getMovie() + " ," + newMovie.getDirector() + " ," + newMovie.getDuration() + ":" + " ADDED to the list";
+        return newMovie.getMovieName() + " ," + newMovie.getDirector() + " ," + newMovie.getDuration() + ":" + " ADDED to the list";
 
     }
 
@@ -66,17 +66,29 @@ public class MovieServiceImplement implements MovieService {
     @Override
     public String showMoviesOfMoreThanOneHour() {
 
+        String moreThanOneHourMovie = "Movies from more than 1 hour: \n";
+        
         Iterator<MovieEntity> it = movieList.iterator();
-        String moreThanOneHourMovie = " Movies from more than 1 hour: \n";
+        
         while (it.hasNext()) {
-
-            if (it.next().getDuration() >= 60) {
-
-                moreThanOneHourMovie += it.next().toString();
-
+          
+            if (it.next().getDuration() <= 60 ) {
+                
+                moreThanOneHourMovie += it.next().toString() + "\n" ;
+                
             }
-
+            
         }
+        
+//        for (int i = 0; i < movieList.size(); i++) {
+//
+//            if (movieList.get(i).getDuration() >= 60) {
+//
+//                moreThanOneHourMovie += movieList.get(i).toString() + "\n";
+//
+//            }
+//
+//        }
 
         return moreThanOneHourMovie;
     }
@@ -90,7 +102,7 @@ public class MovieServiceImplement implements MovieService {
 
         for (MovieEntity unitary : movieList) {
 
-            sortedByDuration += unitary;
+            sortedByDuration += unitary+ "\n";
 
         }
 
@@ -100,13 +112,13 @@ public class MovieServiceImplement implements MovieService {
     @Override
     public String SortMovieShorterToLongerDuration() {
 
-        Collections.sort(movieList, MovieComparators.sortByMovieName);
+        Collections.sort(movieList, Collections.reverseOrder(MovieComparators.sortByMovieDuration));
 
         String sortedByName = " Movies Sorted by Name : \n";
 
         for (MovieEntity unitary : movieList) {
 
-            sortedByName += unitary;
+            sortedByName += unitary+ "\n";
 
         }
 
@@ -117,13 +129,13 @@ public class MovieServiceImplement implements MovieService {
     @Override
     public String SortMoviesAlphabeticallyByName() {
 
-        Collections.sort(movieList, Collections.reverseOrder(MovieComparators.sortByMovieDuration) );
+        Collections.sort(movieList, MovieComparators.sortByMovieName);
 
         String sortedByName = " Movies Sorted by Name : \n";
 
         for (MovieEntity unitary : movieList) {
 
-            sortedByName += unitary;
+            sortedByName += unitary+ "\n";
 
         }
 
@@ -139,7 +151,7 @@ public class MovieServiceImplement implements MovieService {
 
         for (MovieEntity unitary : movieList) {
 
-            sortedByDirector += unitary;
+            sortedByDirector += unitary+ "\n";
 
         }
 
@@ -156,37 +168,49 @@ public class MovieServiceImplement implements MovieService {
             System.out.println(MovieConstants.MENU_MESSAGE);
 
             option = read.nextInt();
-            
+
             switch (option) {
                 case 1:
-                    
+
+                    addMovieToTheList(newMovie());
                     break;
-               
+
                 case 2:
-                    
+                    System.out.println(showAllTheMovies());
                     break;
-                
+
                 case 3:
-                    
+                    System.out.println(showMoviesOfMoreThanOneHour());
                     break;
-               
+
                 case 4:
-                    
+                    System.out.println(SortMovieLongerToShorterDuration());
                     break;
-                
+
                 case 5:
-                    
+                    System.out.println(SortMovieShorterToLongerDuration());
                     break;
-                
+
                 case 6:
-                    
+                    System.out.println(SortMoviesAlphabeticallyByName());
                     break;
-                
+
                 case 7:
-                    
+                    System.out.println(SortMoviesAlphabeticallyByDirector());
                     break;
-                default:
-                    throw new AssertionError();
+                case 8:
+                    System.out.println("Are you sure you want to quit ?");
+                    String optionSwitch = read.next();
+                    
+                    if (optionSwitch.equalsIgnoreCase("y")) {
+
+                        System.out.println("You've quited.");
+                    } else {
+
+                        option = 0;
+
+                    }
+
             }
 
         } while (option != 8);

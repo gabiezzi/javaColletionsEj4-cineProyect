@@ -18,7 +18,7 @@ public class MovieComparators {
         @Override
         public int compare(MovieEntity movie1, MovieEntity movie2) {
 
-            return movie2.getMovie().compareTo(movie1.getMovie());
+            return movie1.getMovieName().compareTo(movie2.getMovieName());
 
         }
     };

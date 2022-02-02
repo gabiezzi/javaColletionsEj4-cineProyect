@@ -15,7 +15,7 @@ public class MovieEntity {
     private String director;
     private Integer duration; // the duration of the movie in minutes.
 
-    public MovieEntity(String movie, String director, int duration) {
+    public MovieEntity(String movieName, String director, int duration) {
         this.movieName = movieName;
         this.director = director;
         this.duration = duration;
@@ -24,11 +24,11 @@ public class MovieEntity {
     public MovieEntity() {
     }
 
-    public String getMovie() {
+    public String getMovieName() {
         return movieName;
     }
 
-    public void setMovie(String movieName) {
+    public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
 
@@ -50,7 +50,7 @@ public class MovieEntity {
 
     @Override
     public String toString() {
-        return "MovieEntity{" + "movie=" + movieName + ", director=" + director + ", duration=" + duration + '}';
+        return "MovieEntity{" + "movieName=" + movieName + ", director=" + director + ", duration=" + duration + '}';
     }
 
 }
